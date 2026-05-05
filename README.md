@@ -44,6 +44,34 @@ Service contains the business logic of the application.
 
 Repository communicates with the database using Spring Data JPA.
 
+## System Design Diagrams
+
+This project includes several diagrams that explain the system design, database structure, user roles, and Java classes.
+
+### 1. Architecture Diagram
+
+This diagram shows the layered architecture of the project: Controller, Service, Repository, and Database.
+
+![Architecture Diagram](diagrams/architecture-diagram.png)
+
+### 2. Database ERD Diagram
+
+This diagram shows the database tables and relationships between them.
+
+![Database ERD Diagram](diagrams/database-erd.png)
+
+### 3. UML Use Case Diagram
+
+This diagram shows the main actors of the system and what actions they can perform.
+
+![Use Case Diagram](diagrams/use-case-diagram.png)
+
+### 4. UML Class Diagram
+
+This diagram shows the main Java entity classes and their relationships.
+
+![Class Diagram](diagrams/class-diagram.png)
+
 ## Business Logic
 
 The project is not only simple CRUD.
