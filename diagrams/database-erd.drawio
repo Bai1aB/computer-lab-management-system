@@ -1,0 +1,73 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Страница-1" id="QrqITd4rmzM783bQ0eGv">
+    <mxGraphModel dx="1030" dy="570" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="0L3DC5Q9Us2Uc-TX6AnE-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;&lt;b&gt;users&lt;/b&gt;&lt;/font&gt;&lt;div&gt;id PK&lt;/div&gt;&lt;div&gt;full_name&lt;/div&gt;&lt;div&gt;email&lt;/div&gt;&lt;div&gt;role&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="80" x="154" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0L3DC5Q9Us2Uc-TX6AnE-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;b&gt;&lt;font style=&quot;font-size: 15px;&quot;&gt;bookings&lt;/font&gt;&lt;/b&gt;&lt;div&gt;id PK&lt;/div&gt;&lt;div&gt;start_time&lt;/div&gt;&lt;div&gt;end_time&lt;/div&gt;&lt;div&gt;purpose&lt;/div&gt;&lt;div&gt;status&lt;/div&gt;&lt;div&gt;user_id FK&lt;/div&gt;&lt;div&gt;computer_id FK&lt;/div&gt;" vertex="1">
+          <mxGeometry height="120" width="120" x="134" y="205" as="geometry" />
+        </mxCell>
+        <mxCell id="0L3DC5Q9Us2Uc-TX6AnE-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;b&gt;&lt;font style=&quot;font-size: 15px;&quot;&gt;lab_rooms&lt;/font&gt;&lt;/b&gt;&lt;div&gt;id PK&lt;/div&gt;&lt;div&gt;room_number&lt;/div&gt;&lt;div&gt;building&lt;/div&gt;&lt;div&gt;capacity&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="120" x="344" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0L3DC5Q9Us2Uc-TX6AnE-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;b&gt;&lt;font style=&quot;font-size: 15px;&quot;&gt;operating_systems&lt;/font&gt;&lt;/b&gt;&lt;div&gt;id PK&lt;/div&gt;&lt;div&gt;name&lt;/div&gt;&lt;div&gt;version&lt;/div&gt;&lt;div&gt;architecture&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="140" x="554" y="205" as="geometry" />
+        </mxCell>
+        <mxCell id="0L3DC5Q9Us2Uc-TX6AnE-5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;b&gt;&lt;font style=&quot;font-size: 15px;&quot;&gt;computers&lt;/font&gt;&lt;/b&gt;&lt;div&gt;id PK&lt;/div&gt;&lt;div&gt;name&lt;/div&gt;&lt;div&gt;cpu&lt;/div&gt;&lt;div&gt;ram&lt;/div&gt;&lt;div&gt;storage&lt;/div&gt;&lt;div&gt;status&lt;/div&gt;&lt;div&gt;lab_room_id FK&lt;/div&gt;&lt;div&gt;operating_system_id FK&lt;/div&gt;" vertex="1">
+          <mxGeometry height="150" width="120" x="344" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="0L3DC5Q9Us2Uc-TX6AnE-6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;b&gt;&lt;font style=&quot;font-size: 15px;&quot;&gt;maintenance_tickets&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;font&gt;id PK&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;description&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;priority&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;status&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;created_at&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;computer_id FK&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="150" x="329" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="0L3DC5Q9Us2Uc-TX6AnE-7" edge="1" parent="1" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="193.5" y="150" as="sourcePoint" />
+            <mxPoint x="193.5" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0L3DC5Q9Us2Uc-TX6AnE-8" edge="1" parent="1" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="0L3DC5Q9Us2Uc-TX6AnE-5" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="403.5" y="140" as="sourcePoint" />
+            <mxPoint x="403.5" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0L3DC5Q9Us2Uc-TX6AnE-10" edge="1" parent="1" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="403.5" y="320" as="sourcePoint" />
+            <mxPoint x="404" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0L3DC5Q9Us2Uc-TX6AnE-11" edge="1" parent="1" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="544" y="240" as="sourcePoint" />
+            <mxPoint x="474" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0L3DC5Q9Us2Uc-TX6AnE-12" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;i&gt;One User can have many Bookings&lt;/i&gt;" vertex="1">
+          <mxGeometry height="30" width="110" x="50" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="0L3DC5Q9Us2Uc-TX6AnE-14" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;i&gt;One LabRoom has many Computers&lt;/i&gt;" vertex="1">
+          <mxGeometry height="30" width="100" x="260" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="0L3DC5Q9Us2Uc-TX6AnE-15" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;i&gt;One OperatingSystem can be installed on many Computers&lt;/i&gt;" vertex="1">
+          <mxGeometry height="30" width="165" x="479" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="0L3DC5Q9Us2Uc-TX6AnE-16" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;i&gt;One Computer can have many MaintenanceTickets&lt;/i&gt;" vertex="1">
+          <mxGeometry height="30" width="121" x="479" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="0L3DC5Q9Us2Uc-TX6AnE-17" edge="1" parent="1" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="330" y="240" as="sourcePoint" />
+            <mxPoint x="260" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0L3DC5Q9Us2Uc-TX6AnE-19" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;i&gt;One Computer can have many Bookings&lt;/i&gt;" vertex="1">
+          <mxGeometry height="30" width="110" x="234" y="160" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
