@@ -18,6 +18,8 @@
             <a class="app-nav-link" th:classappend="${activePage == 'operating-systems'} ? ' active'" th:href="@{/operating-systems}">Operating Systems</a>
             <a class="app-nav-link" th:classappend="${activePage == 'bookings'} ? ' active'" th:href="@{/bookings}">Bookings</a>
             <a class="app-nav-link" th:classappend="${activePage == 'maintenance-tickets'} ? ' active'" th:href="@{/maintenance-tickets}">Maintenance Tickets</a>
+            <a th:if="${currentUser != null and currentUser.role != null and currentUser.role.name() == 'ADMIN'}"
+               class="app-nav-link" th:classappend="${activePage == 'users'} ? ' active'" th:href="@{/users}">Users</a>
         </nav>
     </aside>
 
@@ -28,7 +30,16 @@
                     <h1 class="h3 mb-0" th:text="${title}">Dashboard</h1>
                     <div class="text-secondary">Computer Lab Management System</div>
                 </div>
-                <a class="btn btn-primary" th:href="@{/computers/new}">Add Computer</a>
+                <div class="d-flex flex-wrap align-items-center gap-3">
+                    <div class="text-end" th:if="${currentUser != null}">
+                        <div class="fw-semibold" th:text="${currentUser.fullName}">User Name</div>
+                        <div class="text-secondary small" th:text="${currentUser.role}">STUDENT</div>
+                    </div>
+                    <form th:if="${currentUser != null}" th:action="@{/logout}" method="post">
+                        <input th:if="${_csrf != null}" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <button type="submit" class="btn btn-outline-secondary">Logout</button>
+                    </form>
+                </div>
             </div>
         </header>
 

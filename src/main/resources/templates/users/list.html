@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout('Users', ~{::content})}">
+<body>
+<th:block th:fragment="content">
+    <div class="content-panel">
+        <div class="p-3 border-bottom"><h2 class="h5 mb-0">System Users</h2></div>
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead>
+                <tr><th>Name</th><th>Email</th><th>Role</th></tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td class="fw-semibold" th:text="${user.fullName}">Jane Doe</td>
+                    <td th:text="${user.email}">jane@example.com</td>
+                    <td><span class="badge text-bg-secondary" th:text="${user.role}">STUDENT</span></td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(users)}">
+                    <td colspan="3" class="text-center text-secondary py-4">No users found.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

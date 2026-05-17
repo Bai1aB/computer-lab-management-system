@@ -1,6 +1,5 @@
 package com.example.computerlab.controller.web;
 
-import com.example.computerlab.service.BookingService;
 import com.example.computerlab.service.LabRoomService;
 import com.example.computerlab.service.MaintenanceTicketService;
 import com.example.computerlab.service.OperatingSystemService;
@@ -15,7 +14,6 @@ public class CatalogMvcController {
 
     private final LabRoomService labRoomService;
     private final OperatingSystemService operatingSystemService;
-    private final BookingService bookingService;
     private final MaintenanceTicketService maintenanceTicketService;
 
     @GetMapping("/labrooms")
@@ -30,13 +28,6 @@ public class CatalogMvcController {
         model.addAttribute("activePage", "operating-systems");
         model.addAttribute("operatingSystems", operatingSystemService.getAllOperatingSystems());
         return "operating-systems/list";
-    }
-
-    @GetMapping("/bookings")
-    public String bookings(Model model) {
-        model.addAttribute("activePage", "bookings");
-        model.addAttribute("bookings", bookingService.getAllBookings());
-        return "bookings/list";
     }
 
     @GetMapping("/maintenance-tickets")

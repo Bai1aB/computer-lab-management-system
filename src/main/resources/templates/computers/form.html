@@ -6,6 +6,8 @@
     <div class="content-panel p-4">
         <form th:action="${computerForm.id == null} ? @{/computers} : @{/computers/{id}(id=${computerForm.id})}"
               th:object="${computerForm}" method="post" class="row g-3" novalidate>
+            <input th:if="${_csrf != null}" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
             <div class="col-12">
                 <h2 class="h5 mb-0" th:text="${pageTitle}">Add Computer</h2>
             </div>
