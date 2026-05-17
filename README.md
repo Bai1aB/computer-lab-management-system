@@ -22,6 +22,12 @@ It can be used in schools, universities, or computer labs where computers need t
 - Web dashboard
 - Browser-based frontend
 - Thymeleaf pages for managing data
+- User registration
+- User login and logout
+- Spring Security authentication
+- BCrypt password hashing
+- Role-based access control
+- Admin-only users page
 
 ## Frontend
 
@@ -77,11 +83,37 @@ The project can now be used in two ways:
 1. Through REST API endpoints using Postman.
 2. Through the browser using Thymeleaf frontend pages.
 
+## Authentication and Security
+
+The project includes authentication using Spring Security.
+
+Users can register, log in, and log out through the web interface.
+
+Authentication features:
+
+- User registration
+- User login
+- User logout
+- Password hashing with BCrypt
+- Protected frontend pages
+- Role-based access control
+- Admin-only Users page
+
+New registered users receive the STUDENT role by default.  
+This is safer because users cannot give themselves ADMIN or TEACHER role during registration.
+
+Only users with ADMIN role can access the Users page:
+
+```text
+http://localhost:8080/users
+```
+
 ## Technologies Used
 
 - Java
 - Spring Boot
 - Spring Web
+- Spring Security
 - Spring Data JPA
 - PostgreSQL
 - Thymeleaf
@@ -317,6 +349,32 @@ ComputerlabApplication.java
 ```text
 http://localhost:8080/dashboard
 ```
+
+9. Register a new user:
+
+```text
+http://localhost:8080/register
+```
+
+10. Log in:
+
+```text
+http://localhost:8080/login
+```
+
+## Current Role Logic
+
+The current role logic works as follows:
+
+- New users register as STUDENT by default.
+- STUDENT users can access normal frontend pages such as dashboard, computers, bookings, and maintenance tickets.
+- ADMIN users can access the admin-only Users page.
+- The Users page is protected with role-based access control.
+- If a non-admin user tries to open `/users`, the system returns 403 Forbidden.
+
+Future improvement:
+
+- Add admin role management page where ADMIN can change users' roles from STUDENT to TEACHER or ADMIN directly from the frontend.
 
 ## Author
 
