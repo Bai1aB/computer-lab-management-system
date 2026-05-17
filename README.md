@@ -28,6 +28,8 @@ It can be used in schools, universities, or computer labs where computers need t
 - BCrypt password hashing
 - Role-based access control
 - Admin-only users page
+- Admin role management
+- Admin can update user roles
 
 ## Frontend
 
@@ -107,6 +109,84 @@ Only users with ADMIN role can access the Users page:
 ```text
 http://localhost:8080/users
 ```
+
+Admin users can manage user roles from the Users page.
+
+The admin can change a user's role to:
+
+- STUDENT
+- TEACHER
+- ADMIN
+
+New users are still registered as STUDENT by default.  
+This is important for security because users cannot give themselves ADMIN rights during registration.
+
+If a STUDENT or TEACHER tries to open the Users page, the system returns:
+
+```text
+403 Forbidden
+```
+
+## Admin Role Management
+
+The project includes admin role management.
+
+New registered users automatically receive the STUDENT role by default.  
+Users cannot choose ADMIN or TEACHER role during registration.
+
+Only ADMIN users can open the Users page:
+
+```text
+http://localhost:8080/users
+```
+
+On this page, the admin can:
+
+- View all users
+- See each user's full name, email, and current role
+- Change a user's role using a dropdown
+- Update the role to STUDENT, TEACHER, or ADMIN
+
+This makes the system more secure because users cannot give themselves admin rights.
+
+Role update logic:
+
+1. Admin opens the Users page.
+2. Admin selects a new role from the dropdown.
+3. Admin clicks the Update Role button.
+4. The system updates the user's role in the database.
+5. The user receives the new role after logging in again.
+
+If a non-admin user tries to access the Users page, the system returns:
+
+```text
+403 Forbidden
+```
+
+## Admin Role Management Implementation Details
+
+Admin role management was added on top of the existing Spring Security authentication system.
+
+Main role-management changes:
+
+- Added role update logic in `UserService.java`
+- Updated `UserMvcController.java`
+- Added POST endpoint for updating roles:
+
+```text
+POST /users/{id}/role
+```
+
+- Updated `templates/users/list.html`
+- Added a role dropdown for each user
+- Added an Update Role button
+- Used the existing `UserRole` enum
+- Kept registration safe by assigning STUDENT role by default
+
+The role update feature is available only for ADMIN users.
+
+The registration form does not include role selection.  
+This prevents users from registering themselves as ADMIN.
 
 ## Technologies Used
 
@@ -372,9 +452,53 @@ The current role logic works as follows:
 - The Users page is protected with role-based access control.
 - If a non-admin user tries to open `/users`, the system returns 403 Forbidden.
 
-Future improvement:
+This role logic makes the system safer because only an ADMIN can give higher permissions to other users.
 
-- Add admin role management page where ADMIN can change users' roles from STUDENT to TEACHER or ADMIN directly from the frontend.
+11. To access the admin-only Users page, the logged-in user must have ADMIN role:
+
+```text
+http://localhost:8080/users
+```
+
+12. If there is no admin user yet, update one user manually in PostgreSQL:
+
+```sql
+UPDATE users
+SET role = 'ADMIN'
+WHERE email = 'your_email@example.com';
+```
+
+13. After changing the role, log out and log in again.
+
+14. As ADMIN, open the Users page and update user roles from the frontend.
+
+## Testing
+
+The project was tested using:
+
+- Browser for frontend pages
+- Postman for REST API endpoints
+- pgAdmin for checking PostgreSQL data
+- IntelliJ IDEA for running the Spring Boot application
+
+Tested authentication features:
+
+- User registration
+- User login
+- User logout
+- Protected dashboard page
+- Admin-only Users page
+- 403 Forbidden for non-admin users
+- Admin role update from the frontend
+- BCrypt password hashing
+- REST API still available for Postman testing
+
+Tested role management:
+
+- New users are registered as STUDENT by default.
+- ADMIN can access `/users`.
+- ADMIN can change user role to STUDENT, TEACHER, or ADMIN.
+- STUDENT and TEACHER cannot access `/users`.
 
 ## Author
 
