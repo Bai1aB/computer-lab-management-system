@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout('Dashboard', ~{::content})}">
+<body>
+<th:block th:fragment="content">
+    <div class="row g-3 mb-4">
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="metric-card p-3">
+                <div class="metric-label">Computers</div>
+                <div class="metric-value" th:text="${totalComputers}">0</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="metric-card p-3">
+                <div class="metric-label">Available</div>
+                <div class="metric-value text-success" th:text="${availableComputers}">0</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="metric-card p-3">
+                <div class="metric-label">Lab Rooms</div>
+                <div class="metric-value" th:text="${labRoomCount}">0</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="metric-card p-3">
+                <div class="metric-label">Open Tickets</div>
+                <div class="metric-value text-warning" th:text="${openTickets}">0</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-12 col-xl-7">
+            <div class="content-panel">
+                <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
+                    <h2 class="h5 mb-0">Recent Computers</h2>
+                    <a class="btn btn-sm btn-outline-primary" th:href="@{/computers}">View all</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Room</th>
+                            <th>Operating System</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="computer : ${recentComputers}">
+                            <td class="fw-semibold" th:text="${computer.name}">PC-01</td>
+                            <td th:text="${computer.labRoom != null ? computer.labRoom.roomNumber : 'Unassigned'}">101</td>
+                            <td th:text="${computer.operatingSystem != null ? computer.operatingSystem.name : 'Not set'}">Ubuntu</td>
+                            <td><span class="badge text-bg-secondary badge-status" th:text="${computer.status}">AVAILABLE</span></td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(recentComputers)}">
+                            <td colspan="4" class="text-center text-secondary py-4">No computers found.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-xl-5">
+            <div class="content-panel">
+                <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
+                    <h2 class="h5 mb-0">Maintenance Queue</h2>
+                    <a class="btn btn-sm btn-outline-primary" th:href="@{/maintenance-tickets}">View all</a>
+                </div>
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item" th:each="ticket : ${recentTickets}">
+                        <div class="d-flex justify-content-between gap-3">
+                            <div>
+                                <div class="fw-semibold" th:text="${ticket.computer != null ? ticket.computer.name : 'Computer not set'}">PC-01</div>
+                                <div class="text-secondary small" th:text="${ticket.description}">Issue description</div>
+                            </div>
+                            <span class="badge text-bg-warning align-self-start" th:text="${ticket.status}">OPEN</span>
+                        </div>
+                    </div>
+                    <div class="list-group-item text-center text-secondary py-4" th:if="${#lists.isEmpty(recentTickets)}">No maintenance tickets found.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

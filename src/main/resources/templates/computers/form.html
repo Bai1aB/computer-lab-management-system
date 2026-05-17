@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(${pageTitle}, ~{::content})}">
+<body>
+<th:block th:fragment="content">
+    <div class="content-panel p-4">
+        <form th:action="${computerForm.id == null} ? @{/computers} : @{/computers/{id}(id=${computerForm.id})}"
+              th:object="${computerForm}" method="post" class="row g-3" novalidate>
+            <div class="col-12">
+                <h2 class="h5 mb-0" th:text="${pageTitle}">Add Computer</h2>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <label for="name" class="form-label">Name</label>
+                <input id="name" type="text" class="form-control" th:field="*{name}"
+                       th:classappend="${#fields.hasErrors('name')} ? ' is-invalid'">
+                <div class="invalid-feedback" th:errors="*{name}">Name error</div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <label for="status" class="form-label">Status</label>
+                <select id="status" class="form-select" th:field="*{status}"
+                        th:classappend="${#fields.hasErrors('status')} ? ' is-invalid'">
+                    <option value="">Select status</option>
+                    <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}">AVAILABLE</option>
+                </select>
+                <div class="invalid-feedback" th:errors="*{status}">Status error</div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <label for="cpu" class="form-label">CPU</label>
+                <input id="cpu" type="text" class="form-control" th:field="*{cpu}"
+                       th:classappend="${#fields.hasErrors('cpu')} ? ' is-invalid'">
+                <div class="invalid-feedback" th:errors="*{cpu}">CPU error</div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <label for="ram" class="form-label">RAM</label>
+                <input id="ram" type="text" class="form-control" th:field="*{ram}"
+                       th:classappend="${#fields.hasErrors('ram')} ? ' is-invalid'">
+                <div class="invalid-feedback" th:errors="*{ram}">RAM error</div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <label for="storage" class="form-label">Storage</label>
+                <input id="storage" type="text" class="form-control" th:field="*{storage}"
+                       th:classappend="${#fields.hasErrors('storage')} ? ' is-invalid'">
+                <div class="invalid-feedback" th:errors="*{storage}">Storage error</div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <label for="labRoomId" class="form-label">Lab Room</label>
+                <select id="labRoomId" class="form-select" th:field="*{labRoomId}"
+                        th:classappend="${#fields.hasErrors('labRoomId')} ? ' is-invalid'">
+                    <option value="">Select lab room</option>
+                    <option th:each="room : ${labRooms}" th:value="${room.id}"
+                            th:text="${room.building + ' / Room ' + room.roomNumber}">Main / Room 101</option>
+                </select>
+                <div class="invalid-feedback" th:errors="*{labRoomId}">Lab room error</div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <label for="operatingSystemId" class="form-label">Operating System</label>
+                <select id="operatingSystemId" class="form-select" th:field="*{operatingSystemId}"
+                        th:classappend="${#fields.hasErrors('operatingSystemId')} ? ' is-invalid'">
+                    <option value="">Select operating system</option>
+                    <option th:each="os : ${operatingSystems}" th:value="${os.id}"
+                            th:text="${os.name + ' ' + os.version + ' (' + os.architecture + ')'}">Ubuntu 24.04</option>
+                </select>
+                <div class="invalid-feedback" th:errors="*{operatingSystemId}">Operating system error</div>
+            </div>
+
+            <div class="col-12 d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a class="btn btn-outline-secondary" th:href="@{/computers}">Cancel</a>
+            </div>
+        </form>
+    </div>
+</th:block>
+</body>
+</html>

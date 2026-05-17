@@ -1,0 +1,94 @@
+:root {
+    --app-sidebar: #1f2937;
+    --app-sidebar-link: #cbd5e1;
+    --app-sidebar-active: #0d6efd;
+    --app-bg: #f5f7fb;
+    --app-border: #e5e7eb;
+}
+
+body {
+    background: var(--app-bg);
+    color: #111827;
+}
+
+.app-shell {
+    min-height: 100vh;
+}
+
+.app-sidebar {
+    background: var(--app-sidebar);
+    min-height: 100vh;
+    width: 260px;
+}
+
+.app-brand {
+    color: #ffffff;
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+.app-nav-link {
+    align-items: center;
+    border-radius: 8px;
+    color: var(--app-sidebar-link);
+    display: flex;
+    gap: .75rem;
+    padding: .7rem .9rem;
+    text-decoration: none;
+}
+
+.app-nav-link:hover,
+.app-nav-link.active {
+    background: var(--app-sidebar-active);
+    color: #ffffff;
+}
+
+.app-main {
+    min-width: 0;
+}
+
+.page-header {
+    border-bottom: 1px solid var(--app-border);
+    background: #ffffff;
+}
+
+.metric-card,
+.content-panel {
+    background: #ffffff;
+    border: 1px solid var(--app-border);
+    border-radius: 8px;
+}
+
+.metric-label {
+    color: #6b7280;
+    font-size: .875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.table thead th {
+    background: #f8fafc;
+    color: #4b5563;
+    font-size: .8rem;
+    text-transform: uppercase;
+}
+
+.badge-status {
+    letter-spacing: 0;
+}
+
+@media (max-width: 991.98px) {
+    .app-shell {
+        display: block !important;
+    }
+
+    .app-sidebar {
+        min-height: auto;
+        width: 100%;
+    }
+}
