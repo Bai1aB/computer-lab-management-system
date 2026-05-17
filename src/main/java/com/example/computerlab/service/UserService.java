@@ -1,5 +1,6 @@
 package com.example.computerlab.service;
 
+import com.example.computerlab.enums.UserRole;
 import com.example.computerlab.model.User;
 import com.example.computerlab.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +50,13 @@ public class UserService {
             existingUser.setPassword(encodePassword(updatedUser.getPassword()));
         }
 
+        return userRepository.save(existingUser);
+    }
+
+    public User updateUserRole(Long id, UserRole role) {
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+        existingUser.setRole(role);
         return userRepository.save(existingUser);
     }
 

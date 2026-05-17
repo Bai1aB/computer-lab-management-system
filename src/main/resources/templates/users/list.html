@@ -8,16 +8,27 @@
         <div class="table-responsive">
             <table class="table align-middle mb-0">
                 <thead>
-                <tr><th>Name</th><th>Email</th><th>Role</th></tr>
+                <tr><th>Name</th><th>Email</th><th>Current Role</th><th class="text-end">Role Management</th></tr>
                 </thead>
                 <tbody>
                 <tr th:each="user : ${users}">
                     <td class="fw-semibold" th:text="${user.fullName}">Jane Doe</td>
                     <td th:text="${user.email}">jane@example.com</td>
                     <td><span class="badge text-bg-secondary" th:text="${user.role}">STUDENT</span></td>
+                    <td>
+                        <form class="d-flex justify-content-end gap-2"
+                              th:action="@{/users/{id}/role(id=${user.id})}" method="post">
+                            <input th:if="${_csrf != null}" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                            <select class="form-select form-select-sm w-auto" name="role" aria-label="Select role">
+                                <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"
+                                        th:selected="${role == user.role}">STUDENT</option>
+                            </select>
+                            <button type="submit" class="btn btn-sm btn-primary">Update Role</button>
+                        </form>
+                    </td>
                 </tr>
                 <tr th:if="${#lists.isEmpty(users)}">
-                    <td colspan="3" class="text-center text-secondary py-4">No users found.</td>
+                    <td colspan="4" class="text-center text-secondary py-4">No users found.</td>
                 </tr>
                 </tbody>
             </table>
