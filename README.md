@@ -19,6 +19,63 @@ It can be used in schools, universities, or computer labs where computers need t
 - Filter computers by lab room
 - REST API support
 - PostgreSQL database integration
+- Web dashboard
+- Browser-based frontend
+- Thymeleaf pages for managing data
+
+## Frontend
+
+The project includes a web frontend built with Thymeleaf and Bootstrap.
+
+In the previous version, the system was mainly a REST API backend tested with Postman.  
+Now the system also has browser-based pages for managing the computer lab data.
+
+The frontend includes:
+
+- Dashboard page
+- Computers page
+- Lab Rooms page
+- Operating Systems page
+- Bookings page
+- Maintenance Tickets page
+
+The dashboard can be opened in the browser:
+
+http://localhost:8080/dashboard
+
+## Frontend Implementation Details
+
+The frontend was added on top of the existing Spring Boot REST API.
+
+The REST API controllers are still available for JSON responses and Postman testing.  
+In addition, MVC controllers were added for browser-based pages using Thymeleaf.
+
+Main frontend-related changes:
+
+- Added Thymeleaf dependency in `pom.xml`
+- Added MVC controllers in `src/main/java/com/example/computerlab/controller/web`
+- Added DTO classes in `src/main/java/com/example/computerlab/dto`
+- Added CSS styles in `src/main/resources/static/css/app.css`
+- Added Thymeleaf HTML templates in `src/main/resources/templates`
+
+Main frontend files:
+
+- `dashboard.html` - main dashboard page
+- `fragments/layout.html` - shared layout with sidebar and common page structure
+- `computers/list.html` - computers list page
+- `computers/form.html` - create/edit computer form
+- `labrooms/list.html` - lab rooms page
+- `operating-systems/list.html` - operating systems page
+- `bookings/list.html` - bookings page
+- `maintenance-tickets/list.html` - maintenance tickets page
+
+The frontend uses the existing Service layer to load data from the database.  
+This keeps the project architecture clean because the MVC controllers do not work directly with repositories.
+
+The project can now be used in two ways:
+
+1. Through REST API endpoints using Postman.
+2. Through the browser using Thymeleaf frontend pages.
 
 ## Technologies Used
 
@@ -27,6 +84,8 @@ It can be used in schools, universities, or computer labs where computers need t
 - Spring Web
 - Spring Data JPA
 - PostgreSQL
+- Thymeleaf
+- Bootstrap
 - Lombok
 - Maven
 - Postman
@@ -43,6 +102,16 @@ Controller receives HTTP requests from the client.
 Service contains the business logic of the application.
 
 Repository communicates with the database using Spring Data JPA.
+
+The project now supports both REST API and web frontend.
+
+REST controllers are used for API endpoints.  
+MVC controllers are used for Thymeleaf frontend pages.
+
+This means the project can be tested in two ways:
+
+- Through Postman using REST API
+- Through browser using the web interface
 
 ## System Design Diagrams
 
@@ -242,6 +311,12 @@ src/main/resources/application.properties
 ComputerlabApplication.java
 
 7. Test the API using Postman.
+
+8. Open the frontend in the browser:
+
+```text
+http://localhost:8080/dashboard
+```
 
 ## Author
 
