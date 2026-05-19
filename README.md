@@ -30,6 +30,12 @@ It can be used in schools, universities, or computer labs where computers need t
 - Admin-only users page
 - Admin role management
 - Admin can update user roles
+- Full frontend CRUD for lab rooms
+- Full frontend CRUD for operating systems
+- Browser-based booking creation
+- Browser-based maintenance ticket creation
+- Admin maintenance ticket status update
+- Role-based frontend actions
 
 ## Frontend
 
@@ -41,11 +47,12 @@ Now the system also has browser-based pages for managing the computer lab data.
 The frontend includes:
 
 - Dashboard page
-- Computers page
-- Lab Rooms page
-- Operating Systems page
-- Bookings page
-- Maintenance Tickets page
+- Computers page with create/edit support
+- Lab Rooms page with create/edit/delete support for ADMIN
+- Operating Systems page with create/edit/delete support for ADMIN
+- Bookings page with browser-based booking creation
+- Maintenance Tickets page with ticket creation and admin status update
+- Users page for ADMIN role management
 
 The dashboard can be opened in the browser:
 
@@ -76,6 +83,10 @@ Main frontend files:
 - `operating-systems/list.html` - operating systems page
 - `bookings/list.html` - bookings page
 - `maintenance-tickets/list.html` - maintenance tickets page
+- `labrooms/form.html` - create/edit lab room form
+- `operating-systems/form.html` - create/edit operating system form
+- `bookings/form.html` - create booking form
+- `maintenance-tickets/form.html` - create maintenance ticket form
 
 The frontend uses the existing Service layer to load data from the database.  
 This keeps the project architecture clean because the MVC controllers do not work directly with repositories.
@@ -84,6 +95,70 @@ The project can now be used in two ways:
 
 1. Through REST API endpoints using Postman.
 2. Through the browser using Thymeleaf frontend pages.
+
+## Frontend Management Features
+
+The browser frontend now supports real management operations, not only data display.
+
+### Lab Rooms
+
+ADMIN users can manage lab rooms directly from the browser:
+
+- View all lab rooms
+- Create a new lab room
+- Edit an existing lab room
+- Delete a lab room
+
+Lab room fields:
+
+- room number
+- building
+- capacity
+
+### Operating Systems
+
+ADMIN users can manage operating systems directly from the browser:
+
+- View all operating systems
+- Create a new operating system
+- Edit an existing operating system
+- Delete an operating system
+
+Operating system fields:
+
+- name
+- version
+- architecture
+
+### Bookings
+
+Logged-in users can create bookings from the browser.
+
+The booking form includes:
+
+- computer
+- start time
+- end time
+- purpose
+
+The user is not selected manually in the form.  
+The system uses the currently logged-in user from Spring Security and connects the booking to that user automatically.
+
+This prevents users from creating bookings on behalf of another user.
+
+### Maintenance Tickets
+
+Logged-in users can create maintenance tickets from the browser.
+
+The maintenance ticket form includes:
+
+- computer
+- description
+- priority
+
+When a maintenance ticket is created, the system marks the related computer as under maintenance according to the Service layer business logic.
+
+ADMIN users can also update maintenance ticket status from the browser.
 
 ## Authentication and Security
 
@@ -255,13 +330,19 @@ This diagram shows the main Java entity classes and their relationships.
 
 ## Business Logic
 
-The project is not only simple CRUD.
+The project is not only simple CRUD.  
+It also contains important business rules in the Service layer.
 
 Main business rules:
 
 1. A computer cannot be booked if it is BROKEN or under MAINTENANCE.
 2. When a booking is created, the computer status changes to BOOKED.
 3. When a maintenance ticket is created, the computer status changes to MAINTENANCE.
+4. New registered users receive the STUDENT role by default.
+5. Users cannot assign ADMIN or TEACHER role to themselves during registration.
+6. Only ADMIN users can update user roles.
+7. Only ADMIN users can manage lab rooms and operating systems from the browser.
+8. The currently logged-in user is automatically connected to a booking created from the frontend.
 
 ## Main Entities
 
@@ -442,25 +523,24 @@ http://localhost:8080/register
 http://localhost:8080/login
 ```
 
-## Current Role Logic
+11. Open the main frontend pages:
 
-The current role logic works as follows:
+```text
+http://localhost:8080/computers
+http://localhost:8080/labrooms
+http://localhost:8080/operating-systems
+http://localhost:8080/bookings
+http://localhost:8080/maintenance-tickets
+http://localhost:8080/users
+```
 
-- New users register as STUDENT by default.
-- STUDENT users can access normal frontend pages such as dashboard, computers, bookings, and maintenance tickets.
-- ADMIN users can access the admin-only Users page.
-- The Users page is protected with role-based access control.
-- If a non-admin user tries to open `/users`, the system returns 403 Forbidden.
-
-This role logic makes the system safer because only an ADMIN can give higher permissions to other users.
-
-11. To access the admin-only Users page, the logged-in user must have ADMIN role:
+12. To access the admin-only Users page, the logged-in user must have ADMIN role:
 
 ```text
 http://localhost:8080/users
 ```
 
-12. If there is no admin user yet, update one user manually in PostgreSQL:
+13. If there is no admin user yet, update one user manually in PostgreSQL:
 
 ```sql
 UPDATE users
@@ -468,9 +548,30 @@ SET role = 'ADMIN'
 WHERE email = 'your_email@example.com';
 ```
 
-13. After changing the role, log out and log in again.
+14. After changing the role, log out and log in again.
 
-14. As ADMIN, open the Users page and update user roles from the frontend.
+15. As ADMIN, open the Users page and update user roles from the frontend.
+
+## Current Role Logic
+
+The current role logic works as follows:
+
+- New users register as STUDENT by default.
+- Users cannot choose ADMIN or TEACHER during registration.
+- STUDENT users can access dashboard, computers, bookings, and maintenance tickets.
+- STUDENT users can create bookings and maintenance tickets from the browser.
+- TEACHER users can access dashboard, computers, bookings, and maintenance tickets.
+- TEACHER users can create bookings and maintenance tickets from the browser.
+- ADMIN users can access all management pages.
+- ADMIN users can manage users and update user roles.
+- ADMIN users can create, edit, and delete lab rooms.
+- ADMIN users can create, edit, and delete operating systems.
+- ADMIN users can create and edit computers.
+- ADMIN users can update maintenance ticket status.
+- The Users page is protected with role-based access control.
+- If a non-admin user tries to open `/users`, the system returns 403 Forbidden.
+
+This role logic makes the system safer because only ADMIN users can manage system configuration and user permissions.
 
 ## Testing
 
@@ -499,6 +600,20 @@ Tested role management:
 - ADMIN can access `/users`.
 - ADMIN can change user role to STUDENT, TEACHER, or ADMIN.
 - STUDENT and TEACHER cannot access `/users`.
+
+Tested frontend CRUD and management features:
+
+- ADMIN can create lab rooms from the browser.
+- ADMIN can edit lab rooms from the browser.
+- ADMIN can delete lab rooms from the browser.
+- ADMIN can create operating systems from the browser.
+- ADMIN can edit operating systems from the browser.
+- ADMIN can delete operating systems from the browser.
+- Logged-in users can create bookings from the browser.
+- Bookings are connected to the currently logged-in user.
+- Logged-in users can create maintenance tickets from the browser.
+- ADMIN can update maintenance ticket status from the browser.
+- REST API endpoints still work after frontend improvements.
 
 ## Author
 
