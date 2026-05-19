@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(${pageTitle}, ~{::content})}">
+<body>
+<th:block th:fragment="content">
+    <div class="content-panel p-4">
+        <form th:action="${labRoomForm.id == null} ? @{/labrooms} : @{/labrooms/{id}(id=${labRoomForm.id})}"
+              th:object="${labRoomForm}" method="post" class="row g-3" novalidate>
+            <input th:if="${_csrf != null}" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+            <div class="col-12">
+                <h2 class="h5 mb-0" th:text="${pageTitle}">Add Lab Room</h2>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <label for="roomNumber" class="form-label">Room Number</label>
+                <input id="roomNumber" type="text" class="form-control" th:field="*{roomNumber}"
+                       th:classappend="${#fields.hasErrors('roomNumber')} ? ' is-invalid'">
+                <div class="invalid-feedback" th:errors="*{roomNumber}">Room number error</div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <label for="building" class="form-label">Building</label>
+                <input id="building" type="text" class="form-control" th:field="*{building}"
+                       th:classappend="${#fields.hasErrors('building')} ? ' is-invalid'">
+                <div class="invalid-feedback" th:errors="*{building}">Building error</div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <label for="capacity" class="form-label">Capacity</label>
+                <input id="capacity" type="number" min="1" class="form-control" th:field="*{capacity}"
+                       th:classappend="${#fields.hasErrors('capacity')} ? ' is-invalid'">
+                <div class="invalid-feedback" th:errors="*{capacity}">Capacity error</div>
+            </div>
+
+            <div class="col-12 d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a class="btn btn-outline-secondary" th:href="@{/labrooms}">Cancel</a>
+            </div>
+        </form>
+    </div>
+</th:block>
+</body>
+</html>

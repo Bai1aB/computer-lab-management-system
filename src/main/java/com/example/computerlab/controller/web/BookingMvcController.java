@@ -1,6 +1,7 @@
 package com.example.computerlab.controller.web;
 
 import com.example.computerlab.dto.BookingForm;
+import com.example.computerlab.enums.ComputerStatus;
 import com.example.computerlab.model.Booking;
 import com.example.computerlab.model.Computer;
 import com.example.computerlab.model.User;
@@ -68,14 +69,20 @@ public class BookingMvcController {
         booking.setEndTime(form.getEndTime());
         booking.setPurpose(form.getPurpose());
 
-        bookingService.createBooking(booking);
-        redirectAttributes.addFlashAttribute("successMessage", "Booking created successfully.");
-        return "redirect:/bookings";
+        try {
+            bookingService.createBooking(booking);
+            redirectAttributes.addFlashAttribute("successMessage", "Booking created successfully.");
+            return "redirect:/bookings";
+        } catch (RuntimeException ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+            prepareForm(model, form);
+            return "bookings/form";
+        }
     }
 
     private void prepareForm(Model model, BookingForm form) {
         model.addAttribute("activePage", "bookings");
         model.addAttribute("bookingForm", form);
-        model.addAttribute("computers", computerService.getAllComputers());
+        model.addAttribute("computers", computerService.getComputersByStatus(ComputerStatus.AVAILABLE));
     }
 }

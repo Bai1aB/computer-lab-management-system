@@ -4,20 +4,33 @@
 <body>
 <th:block th:fragment="content">
     <div class="content-panel">
-        <div class="p-3 border-bottom"><h2 class="h5 mb-0">Lab Rooms</h2></div>
+        <div class="p-3 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <h2 class="h5 mb-0">Lab Rooms</h2>
+            <a th:if="${currentUser != null and currentUser.role != null and currentUser.role.name() == 'ADMIN'}"
+               class="btn btn-primary" th:href="@{/labrooms/new}">Add Lab Room</a>
+        </div>
         <div class="table-responsive">
             <table class="table align-middle mb-0">
                 <thead>
-                <tr><th>Room</th><th>Building</th><th>Capacity</th></tr>
+                <tr><th>Room</th><th>Building</th><th>Capacity</th><th class="text-end" th:if="${currentUser != null and currentUser.role != null and currentUser.role.name() == 'ADMIN'}">Actions</th></tr>
                 </thead>
                 <tbody>
                 <tr th:each="room : ${labRooms}">
                     <td class="fw-semibold" th:text="${room.roomNumber}">101</td>
                     <td th:text="${room.building}">Main</td>
                     <td th:text="${room.capacity}">30</td>
+                    <td class="text-end" th:if="${currentUser != null and currentUser.role != null and currentUser.role.name() == 'ADMIN'}">
+                        <div class="d-flex justify-content-end gap-2">
+                            <a class="btn btn-sm btn-outline-primary" th:href="@{/labrooms/{id}/edit(id=${room.id})}">Edit</a>
+                            <form th:action="@{/labrooms/{id}/delete(id=${room.id})}" method="post">
+                                <input th:if="${_csrf != null}" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                            </form>
+                        </div>
+                    </td>
                 </tr>
                 <tr th:if="${#lists.isEmpty(labRooms)}">
-                    <td colspan="3" class="text-center text-secondary py-4">No lab rooms found.</td>
+                    <td colspan="4" class="text-center text-secondary py-4">No lab rooms found.</td>
                 </tr>
                 </tbody>
             </table>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout('Create Maintenance Ticket', ~{::content})}">
+<body>
+<th:block th:fragment="content">
+    <div class="content-panel p-4">
+        <form th:action="@{/maintenance-tickets}" th:object="${maintenanceTicketForm}" method="post" class="row g-3" novalidate>
+            <input th:if="${_csrf != null}" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+            <div class="col-12">
+                <h2 class="h5 mb-0">Create Maintenance Ticket</h2>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <label for="computerId" class="form-label">Computer</label>
+                <select id="computerId" class="form-select" th:field="*{computerId}"
+                        th:classappend="${#fields.hasErrors('computerId')} ? ' is-invalid'">
+                    <option value="">Select computer</option>
+                    <option th:each="computer : ${computers}" th:value="${computer.id}"
+                            th:text="${computer.name + ' - ' + (computer.labRoom != null ? computer.labRoom.roomNumber : 'Unassigned') + ' - ' + computer.status}">
+                        PC-01
+                    </option>
+                </select>
+                <div class="invalid-feedback" th:errors="*{computerId}">Computer error</div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <label for="priority" class="form-label">Priority</label>
+                <select id="priority" class="form-select" th:field="*{priority}"
+                        th:classappend="${#fields.hasErrors('priority')} ? ' is-invalid'">
+                    <option value="">Select priority</option>
+                    <option th:each="priority : ${priorities}" th:value="${priority}" th:text="${priority}">MEDIUM</option>
+                </select>
+                <div class="invalid-feedback" th:errors="*{priority}">Priority error</div>
+            </div>
+
+            <div class="col-12">
+                <label for="description" class="form-label">Description</label>
+                <textarea id="description" rows="4" class="form-control" th:field="*{description}"
+                          th:classappend="${#fields.hasErrors('description')} ? ' is-invalid'"></textarea>
+                <div class="invalid-feedback" th:errors="*{description}">Description error</div>
+            </div>
+
+            <div class="col-12 d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Save Ticket</button>
+                <a class="btn btn-outline-secondary" th:href="@{/maintenance-tickets}">Cancel</a>
+            </div>
+        </form>
+    </div>
+</th:block>
+</body>
+</html>

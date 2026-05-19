@@ -60,6 +60,12 @@ public class MaintenanceTicketService {
         return maintenanceTicketRepository.save(existingTicket);
     }
 
+    public MaintenanceTicket updateTicketStatus(Long id, TicketStatus status) {
+        MaintenanceTicket existingTicket = getMaintenanceTicketById(id);
+        existingTicket.setStatus(status);
+        return maintenanceTicketRepository.save(existingTicket);
+    }
+
     public void deleteMaintenanceTicket(Long id) {
         MaintenanceTicket existingTicket = getMaintenanceTicketById(id);
         maintenanceTicketRepository.delete(existingTicket);
